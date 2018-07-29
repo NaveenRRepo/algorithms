@@ -25,6 +25,7 @@ public class LinkedList<T> {
 	public void print() {
 		print(head);
 	}
+	
 	private void print(Node<T> node) {
 		Node<T> current = head;
 		while (current != null) {
@@ -34,9 +35,23 @@ public class LinkedList<T> {
 		System.out.println();
 	}
 
+        public void printreverse() {
+		printreverse(head);
+	}
+
+	private void printreverse(Node<T> node) {
+		if (node == null) {
+			return;
+		}
+		printreverse(node.next);
+		System.out.print(node.data + " ");
+	}	
 	public static void main(String[] args) {
 		LinkedList<String> list = new LinkedList<>();
-		list.addFirst("Admin");
+		list.addFirst("Third");
+		list.addFirst("Second");
+		list.addFirst("First");
 		list.print();
+		list.printreverse();
 	}
 }
