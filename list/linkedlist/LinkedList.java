@@ -37,6 +37,7 @@ public class LinkedList<T> {
 
         public void printreverse() {
 		printreverse(head);
+		System.out.println();
 	}
 
 	private void printreverse(Node<T> node) {
@@ -45,12 +46,38 @@ public class LinkedList<T> {
 		}
 		printreverse(node.next);
 		System.out.print(node.data + " ");
-	}	
+	}
+
+	public void reverse() {
+		head = reverse(head);
+	}
+	
+	public Node<T> reverse(Node<T> node) {
+		Node<T> prev = null;
+		Node<T> next = null;
+		Node<T> current = node;
+		while (current != null) {
+			next = current.next;
+			current.next = prev;
+			prev = current;
+			current = next;
+		}
+		return prev;
+	}
+	
 	public static void main(String[] args) {
 		LinkedList<String> list = new LinkedList<>();
+		list.reverse();
+		list.print();
 		list.addFirst("Third");
+		list.reverse();
+		list.reverse();
 		list.addFirst("Second");
 		list.addFirst("First");
+		list.print();
+		list.reverse();
+		list.print();
+		list.reverse();
 		list.print();
 		list.printreverse();
 	}
