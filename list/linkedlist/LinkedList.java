@@ -52,7 +52,7 @@ public class LinkedList<T> {
 		head = reverse(head);
 	}
 	
-	public Node<T> reverse(Node<T> node) {
+	private Node<T> reverse(Node<T> node) {
 		Node<T> prev = null;
 		Node<T> next = null;
 		Node<T> current = node;
@@ -63,6 +63,32 @@ public class LinkedList<T> {
 			current = next;
 		}
 		return prev;
+	}
+
+	public void reverseRecursive() {
+		head = reverseRecursive2(head);
+	}
+
+	private Node<T> reverseRecursive(Node<T> node) {
+		if (node == null || node.next == null) {
+			return node;
+		}
+		Node<T> prev = node;
+		Node<T> next = node.next;
+		Node<T> current = reverseRecursive(next);
+		next.next = prev;
+		prev.next = null;
+		return current;
+	}
+
+	private Node<T> reverseRecursive2(Node<T> node) {
+		if (node == null || node.next == null) {
+			return node;
+		}
+		Node<T> current = reverseRecursive2(node.next);
+		node.next.next = node;
+		node.next = null;
+		return current;
 	}
 	
 	public static void main(String[] args) {
@@ -78,6 +104,7 @@ public class LinkedList<T> {
 		list.reverse();
 		list.print();
 		list.reverse();
+		list.reverseRecursive();
 		list.print();
 		list.printreverse();
 	}
