@@ -51,6 +51,31 @@ public class LinkedList<T> {
 	public void reverse() {
 		head = reverse(head);
 	}
+
+	public void reverseInBlocks(int blockSize) {
+		head = reverseInBlocks(head, blockSize);
+	} 
+
+	private Node<T> reverseInBlocks(Node<T> node, int blockSize) {
+		if (node == null || node.next == null) {
+			return node;
+		}
+		Node<T> current = node;
+		Node<T> prev = null;
+		Node<T> next = null;
+		int k = 1;
+		while (current != null && k <= blockSize) {
+			next = current.next;
+			current.next = prev;
+			prev = current;
+			current = next;
+			k = k + 1;
+		}
+		if (next != null) {
+			node.next = reverseInBlocks(next, blockSize);
+		}
+		return prev;
+	}
 	
 	private Node<T> reverse(Node<T> node) {
 		Node<T> prev = null;
@@ -93,19 +118,12 @@ public class LinkedList<T> {
 	
 	public static void main(String[] args) {
 		LinkedList<String> list = new LinkedList<>();
-		list.reverse();
 		list.print();
 		list.addFirst("Third");
-		list.reverse();
-		list.reverse();
 		list.addFirst("Second");
 		list.addFirst("First");
 		list.print();
-		list.reverse();
+		list.reverseInBlocks(2);
 		list.print();
-		list.reverse();
-		list.reverseRecursive();
-		list.print();
-		list.printreverse();
 	}
 }
