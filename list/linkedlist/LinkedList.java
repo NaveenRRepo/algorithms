@@ -35,6 +35,50 @@ public class LinkedList<T> {
 			current.next = node;	
 		}
 	}
+	
+	
+	/**
+	* Nth node from end 
+	* 1 2 3 4 5 pos = 2 
+	* Expected output should be 4 
+	* so fix a current pointer in the beginning 
+  	* go to the link where pos = 0; current will be pointing to 2
+	* then start a pointer again from beginning
+	* shift both of them till current reaches end of the list, the diff between 
+	* both the pointers yeild a node from pos = 2 from end
+	* one more catch is there in case there is no node from end at pos then it must 
+	* return null
+	* 
+        */
+	
+	public T nodeFromLast(int pos) {
+             Node<T> node = nodeFromLast(head, pos);
+             if (node == null) {
+                     return null;
+             }
+             return node.data;
+     	}
+
+     	private Node<T> nodeFromLast(Node<T> node, int pos) {
+    	 	 if (pos == 0) {
+    	 		 return null;
+    	 	 }
+             Node<T> current = node;
+             int count = 1;
+             while (current != null && count < pos) {
+                     current = current.next;
+                     count = count + 1;
+             }
+             if (current == null) {
+                     return null;
+             }
+             Node<T> expectedNode = node;
+             while (current != null && current.next != null) {
+                     current = current.next;
+                     expectedNode = expectedNode.next;
+             }
+             return expectedNode;
+     	}
 
 	/**
 	 * Given a singly linked list, find middle of the linked list. 
@@ -178,5 +222,6 @@ public class LinkedList<T> {
 	        list.addLast("Fourth");
 		list.print();
 		System.out.println("Middle -> " + list.middle());
+		System.out.println("Expected Nth Node from last for pos 1 -> " +  list.nodeFromLast(1));
 	}
 }
