@@ -52,32 +52,32 @@ public class LinkedList<T> {
         */
 	
 	public T nodeFromLast(int pos) {
-             Node<T> node = nodeFromLast(head, pos);
-             if (node == null) {
-                     return null;
-             }
-             return node.data;
+             	Node<T> node = nodeFromLast(head, pos);
+             	if (node == null) {
+                	return null;
+             	}
+        	return node.data;
      	}
 
      	private Node<T> nodeFromLast(Node<T> node, int pos) {
-    	 	 if (pos == 0) {
-    	 		 return null;
-    	 	 }
-             Node<T> current = node;
-             int count = 1;
-             while (current != null && count < pos) {
-                     current = current.next;
-                     count = count + 1;
-             }
-             if (current == null) {
-                     return null;
-             }
-             Node<T> expectedNode = node;
-             while (current != null && current.next != null) {
-                     current = current.next;
-                     expectedNode = expectedNode.next;
-             }
-             return expectedNode;
+    		if (pos == 0) {
+    	 		return null;
+    	     	}
+             	Node<T> current = node;
+             	int count = 1;
+             	while (current != null && count < pos) {
+                	current = current.next;
+                     	count = count + 1;
+             	}
+             	if (current == null) {
+                	return null;
+             	}
+             	Node<T> expectedNode = node;
+             	while (current != null && current.next != null) {
+                	current = current.next;
+                     	expectedNode = expectedNode.next;
+             	}
+             	return expectedNode;
      	}
 
 	/**
