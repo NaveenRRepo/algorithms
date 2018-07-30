@@ -36,6 +36,37 @@ public class LinkedList<T> {
 		}
 	}
 
+	/**
+	 * Given a singly linked list, find middle of the linked list. 
+	 * For example, if given linked list is 1->2->3->4->5 then output should be 3. 
+	 * If there are even nodes, then there would be two middle nodes, 
+	 * we need to print second middle element. 
+	 * For example, if given linked list is 1->2->3->4->5->6 then output should be 4.
+	 * 
+	 * Output:
+	 * Your function should return data of linked list.  If linked list is empty, then return -1.
+	 */
+	public T middle() {
+		Node<T> middle = middle(head);
+		if (middle != null) {
+			return middle.data;
+		}
+		return null;
+	}
+	
+	private Node<T> middle(Node<T> node) {
+		Node<T> fastPointer = node;
+		Node<T> slowPointer = node;
+		
+		while (slowPointer != null && fastPointer != null && fastPointer.next != null) {
+			slowPointer = slowPointer.next;
+			fastPointer = fastPointer.next.next;
+		}
+		return slowPointer;	
+		
+	}
+
+
 	public void print() {
 		System.out.print("Current list -> ");  
 		print(head);
@@ -134,11 +165,18 @@ public class LinkedList<T> {
 	public static void main(String[] args) {
 		LinkedList<String> list = new LinkedList<>();
 		list.print();
+		System.out.println("Middle -> " + list.middle());
 		list.addLast("First");
+		list.print();
+		System.out.println("Middle -> " + list.middle());
 		list.addLast("Second");
+		list.print();
+		System.out.println("Middle -> " + list.middle());
 		list.addLast("Third");
 		list.print();
-		list.reverseInBlocks(2);
+		System.out.println("Middle -> " + list.middle());
+	        list.addLast("Fourth");
 		list.print();
+		System.out.println("Middle -> " + list.middle());
 	}
 }
