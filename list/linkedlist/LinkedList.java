@@ -205,6 +205,43 @@ public class LinkedList<T> {
 		node.next = null;
 		return current;
 	}
+
+
+	public void rotate(int numberOfNodes, boolean clock) {
+		head = rotate(head, numberOfNodes, clock);
+	}
+
+	private Node<T> rotate(Node<T> node, int numberOfNodes, boolean clock) {
+		if (node == null || numberOfNodes <=0) {
+			return node;
+		}
+		Node<T> current = node;
+		Node<T> last = null;
+		Node<T> newHead = null;
+		int len = 0;
+		while (current != null) {
+			last = current;
+			current = current.next;
+			len++;
+		}
+		int kthNode = numberOfNodes % len;
+		if (kthNode == 0) {
+			return node;
+		}
+		
+		if (clock) {
+			kthNode = len - kthNode;
+		}
+		current = node;
+		while (kthNode > 1) {
+			current = current.next;
+			kthNode--;
+		}
+		last.next = node;
+		newHead = current.next;
+		current.next = null;
+		return newHead;
+	}
 	
 	public static void main(String[] args) {
 		LinkedList<String> list = new LinkedList<>();
@@ -223,5 +260,41 @@ public class LinkedList<T> {
 		list.print();
 		System.out.println("Middle -> " + list.middle());
 		System.out.println("Expected Nth Node from last for pos 1 -> " +  list.nodeFromLast(1));
+	        System.out.println("Rotating clockwise by 0");
+		list.rotate(0,true);
+		list.print();
+	        System.out.println("Rotating clockwise by 1");
+		list.rotate(1,true);
+		list.print();
+	        System.out.println("Rotating clockwise by 2");
+		list.rotate(2,true);	
+		list.print();
+	        System.out.println("Rotating clockwise by 3");
+		list.rotate(3,true);	
+		list.print();
+	        System.out.println("Rotating clockwise by 4");
+		list.rotate(4,true);
+		list.print();
+	        System.out.println("Rotating clockwise by 5");
+		list.rotate(5,true);	
+		list.print();
+	        System.out.println("Rotating anti clockwise by 0");
+		list.rotate(0,false);
+		list.print();
+	        System.out.println("Rotating anti clockwise by 1");
+		list.rotate(1,false);
+		list.print();
+	        System.out.println("Rotating anti clockwise by 2");
+		list.rotate(2,false);	
+		list.print();
+	        System.out.println("Rotating anti clockwise by 3");
+		list.rotate(3,false);	
+		list.print();
+	        System.out.println("Rotating anti clockwise by 4");
+		list.rotate(4,false);
+		list.print();
+	        System.out.println("Rotating anti clockwise by 5");
+		list.rotate(5,false);	
+		list.print();
 	}
 }
