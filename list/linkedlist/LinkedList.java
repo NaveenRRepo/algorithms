@@ -22,7 +22,22 @@ public class LinkedList<T> {
 		head = node;
 	}
 
+	public void addLast(T data) {
+		Node<T> node = new Node<>(data);
+		Node<T> current = head;
+		while(current != null && current.next != null) {
+			current = current.next;
+		}
+		if (current == null) {
+			head = node;
+		}
+		else {
+			current.next = node;	
+		}
+	}
+
 	public void print() {
+		System.out.print("Current list -> ");  
 		print(head);
 	}
 	
@@ -119,9 +134,9 @@ public class LinkedList<T> {
 	public static void main(String[] args) {
 		LinkedList<String> list = new LinkedList<>();
 		list.print();
-		list.addFirst("Third");
-		list.addFirst("Second");
-		list.addFirst("First");
+		list.addLast("First");
+		list.addLast("Second");
+		list.addLast("Third");
 		list.print();
 		list.reverseInBlocks(2);
 		list.print();
