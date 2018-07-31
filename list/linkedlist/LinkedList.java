@@ -331,7 +331,39 @@ public class LinkedList<T extends Comparable<T>> {
 		current.next = null;
 		return newHead;
 	}
-	
+
+	public void findAndRemoveCycle() {
+		findAndRemoveCycle(head);
+	}
+
+	private void findAndRemoveCycle(Node<T> node) {
+		Node<T> slowPtr = head;
+		Node<T> fastPtr = head;
+
+		while (slowPtr != null && fastPtr != null && fastPtr.next != null) {
+			slowPtr = slowPtr.next;
+			fastPtr = fastPtr.next.next;
+			if (slowPtr == fastPtr) {
+				break;
+			}
+		}
+		if (slowPtr != fastPtr) {
+			System.out.println("No cycle found in List");
+			return;
+		}
+		System.out.println("Found a cycle at node " + slowPtr.data);
+
+		slowPtr = node;
+		while(slowPtr.next != fastPtr.next) {
+			slowPtr = slowPtr.next;
+			fastPtr = fastPtr.next;
+		}
+		fastPtr.next = null;
+	}
+		
+	public void buildListToFormCycle() {
+		this.head.next.next.next.next.next = this.head.next.next;
+	} 	
 	public static void main(String[] args) {
 		LinkedList<String> list = new LinkedList<>();
 		list.print();
@@ -387,6 +419,16 @@ public class LinkedList<T extends Comparable<T>> {
 		list.print();
 		System.out.println("Length of linked list -> " + list.length());
 		list.sort();
-		list.print(); 
+		list.print();
+
+		LinkedList<Integer> list2 = new LinkedList<Integer>();
+	        list2.addLast(50);
+		list2.addLast(20);
+		list2.addLast(15);
+		list2.addLast(4);
+		list2.addLast(10);	
+		list2.buildListToFormCycle();
+		list2.findAndRemoveCycle();
+		list2.print(); 
 	}
 }
