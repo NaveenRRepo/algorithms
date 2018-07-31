@@ -363,7 +363,54 @@ public class LinkedList<T extends Comparable<T>> {
 		
 	public void buildListToFormCycle() {
 		this.head.next.next.next.next.next = this.head.next.next;
-	} 	
+	} 
+
+	public void mergeTwoSortedListsInPlace(LinkedList<T> thatList) {
+		head = mergeTwoSortedListsInPlace(this.head, thatList.head);
+	}      
+
+	private Node<T> mergeTwoSortedListsInPlace(Node<T> node1, Node<T> node2) {
+		if (node1 == null) {
+			return node2;
+		}
+		if (node2 == null) {
+			return node1;
+		}
+
+		Node<T> currentPtr1 = node1;
+		Node<T> currentPtr2 = node2;
+		Node<T> prev = null;
+		while(true) {
+			if (currentPtr1 == null || currentPtr2 == null) {
+				break;
+			}
+			if (currentPtr1.compareTo(currentPtr2.data) >=0) {
+				Node<T> next = currentPtr2.next;
+				if (prev == null) {
+					currentPtr2.next = currentPtr1;
+					node1 = currentPtr2;
+					prev = node1;
+				}
+				else {
+					prev.next = currentPtr2;
+					currentPtr2.next = currentPtr1;
+					prev = currentPtr2;
+				}
+				currentPtr2 = next;
+			}
+			else {
+				prev = currentPtr1;
+				currentPtr1 = currentPtr1.next;
+			}
+		}
+
+		if (currentPtr2 != null) {
+			prev.next = currentPtr2;
+		}
+
+		return node1;
+	}
+
 	public static void main(String[] args) {
 		LinkedList<String> list = new LinkedList<>();
 		list.print();
@@ -429,6 +476,28 @@ public class LinkedList<T extends Comparable<T>> {
 		list2.addLast(10);	
 		list2.buildListToFormCycle();
 		list2.findAndRemoveCycle();
-		list2.print(); 
+		list2.print();
+
+
+		LinkedList<Integer> sll2 = new LinkedList<Integer>();
+		sll2.addLast(6);
+		sll2.addLast(8);
+		sll2.addLast(37);
+		sll2.addLast(48);
+		sll2.addLast(52);
+	
+		sll2.print();
+	
+		LinkedList<Integer> sll1 = new LinkedList<Integer>();
+		sll1.addLast(11);
+		sll1.addLast(12);
+		sll1.addLast(33);
+		sll1.addLast(44);
+		sll1.print();
+		System.out.println("After merge two sorted list");
+		
+		sll1.mergeTwoSortedListsInPlace(sll2);
+		
+		sll1.print(); 
 	}
 }
