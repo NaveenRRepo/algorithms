@@ -1,14 +1,20 @@
 
 
-public class LinkedList<T> {
+public class LinkedList<T extends Comparable<T>> {
 
 	private Node<T> head;
 
-	public class Node<T> {
-		Node<T> next;
-		T data;
-		public Node(T data) {
+	public class Node<E extends Comparable<E>> implements Comparable<E> {
+		Node<E> next;
+		E data;
+
+		public Node(E data) {
 			this.data = data;
+		}
+
+		@Override
+		public int compareTo(E thatData) {
+			return this.data.compareTo(thatData);
 		}
 	}
 	
@@ -50,8 +56,75 @@ public class LinkedList<T> {
 		}
 		return len;
 	}
-		
 	
+	/**
+	* Using merge sort technique
+	*/	
+	public void sort() {
+		head = sort(head);
+	}
+
+	private Node<T> sort(Node<T> node) {
+		if (node == null || node.next == null) {
+			return node;
+		}
+		Node<T> partitionNode = partition(node);
+		Node<T> rightList = partitionNode.next;
+		
+		// cut the left list 
+		partitionNode.next = null;
+		
+		Node<T> left  = sort(node);
+		Node<T> right = sort(rightList);
+
+		return merge(left, right);
+	}
+
+	private Node<T> merge(Node<T> a, Node<T> b) {
+		 Node<T> result = null;
+        	/* Base cases */
+        	if (a == null) {
+            		return b;
+		}
+        	if (b == null) {
+            		return a;
+		}
+ 
+        	/* Pick either a or b, and recur */
+        	if (a.compareTo(b.data) <= 0) 
+        	{
+           	 	result = a;
+            		result.next = merge(a.next, b);
+        	} 
+        	else
+        	{
+            		result = b;
+            		result.next = merge(a, b.next);
+        	}
+       	 	return result;
+	}
+
+	private Node<T> partition(Node<T> node) {
+		if (node == null) { 
+			return node;
+		}
+		
+        	Node<T> fastptr = node.next;
+        	Node<T> slowptr = node;
+         
+        // Move fastptr by two and slow ptr by one
+        // Finally slowptr will point to middle node
+        	while (fastptr != null)
+        	{
+            		fastptr = fastptr.next;
+            		if(fastptr != null)
+            			{
+                			slowptr = slowptr.next;
+                			fastptr = fastptr.next;
+            		}
+        	}
+        	return slowptr;
+	}		 	
 	
 	/**
 	* Nth node from end 
@@ -312,6 +385,8 @@ public class LinkedList<T> {
 	        System.out.println("Rotating anti clockwise by 5");
 		list.rotate(5,false);	
 		list.print();
-		System.out.println("Length of linked list -> " + list.length()); 
+		System.out.println("Length of linked list -> " + list.length());
+		list.sort();
+		list.print(); 
 	}
 }
