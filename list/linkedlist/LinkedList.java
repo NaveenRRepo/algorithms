@@ -35,6 +35,22 @@ public class LinkedList<T> {
 			current.next = node;	
 		}
 	}
+
+
+	public int length() {
+		return length(head);
+	}
+	
+	private int length(Node<T> node) {
+		int len = 0;
+		Node<T> current = node;
+		while(current != null) {
+			current = current.next;
+			len++;
+		}
+		return len;
+	}
+		
 	
 	
 	/**
@@ -296,5 +312,6 @@ public class LinkedList<T> {
 	        System.out.println("Rotating anti clockwise by 5");
 		list.rotate(5,false);	
 		list.print();
+		System.out.println("Length of linked list -> " + list.length()); 
 	}
 }
