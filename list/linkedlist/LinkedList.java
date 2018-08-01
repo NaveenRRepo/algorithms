@@ -411,6 +411,42 @@ public class LinkedList<T extends Comparable<T>> {
 		return node1;
 	}
 
+
+	public void pairWiseSwap() {
+		head = pairWiseSwap(head);
+	}
+	
+	private Node<T> pairWiseSwap(Node<T> node) {
+		if (node == null || node.next == null) {
+			return node;
+		}
+		
+		Node<T> prev = node;
+		Node<T> current = node.next;
+
+		//save head of the list
+		node = current;
+				
+		Node<T> next = null;
+		
+		while (current != null) {
+			next = current.next;
+			current.next = prev;
+			
+			if (next == null || next.next == null) {
+                		prev.next = next;
+                		break;
+            		}
+
+			prev.next = next.next;
+			prev = next;
+			current = next.next;
+		}
+		
+		return node;
+	}
+
+
 	public static void main(String[] args) {
 		LinkedList<String> list = new LinkedList<>();
 		list.print();
@@ -498,6 +534,23 @@ public class LinkedList<T extends Comparable<T>> {
 		
 		sll1.mergeTwoSortedListsInPlace(sll2);
 		
-		sll1.print(); 
+		sll1.print();
+		System.out.println("Operation pairwise");
+
+		LinkedList<Integer> pwsll = new LinkedList<Integer>();
+		pwsll.pairWiseSwap();
+		pwsll.print();
+		pwsll.addLast(20);
+		pwsll.pairWiseSwap();
+                pwsll.print();
+		pwsll.addLast(30);
+		pwsll.pairWiseSwap();
+                pwsll.print();
+		pwsll.addLast(40);
+		pwsll.pairWiseSwap();
+                pwsll.print();
+		pwsll.addLast(50);
+		pwsll.pairWiseSwap();
+                pwsll.print();
 	}
 }
