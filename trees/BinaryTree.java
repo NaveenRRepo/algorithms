@@ -164,7 +164,15 @@ public class BinaryTree<T extends Comparable<T>> {
 		insertLevelRecursion(node.left, arr, left, size); 
 		insertLevelRecursion(node.right, arr, right, size); 
 		return node;
+	}
+
+	public void inorderIterative() {
+		inorderiterative(root);
+	}
+
+	private void inorderIterative(Node<T> node) {
 	}	
+
 
 	public static void main(String[] args) {
 		BinaryTree<String> tree = new BinaryTree<String>();
