@@ -472,6 +472,34 @@ public class LinkedList<T extends Comparable<T>> {
 	}
 
 
+	public void removeDuplicates() {
+		head = removeDuplicates(head);
+	}
+
+	public Node<T> removeDuplicates(Node<T> node) {
+		if (node == null || node.next == null) {
+			return node;
+		}
+		Node<T> current = node;
+		while (current != null) {
+			Node<T> prev = current;
+			Node<T> start = current.next;
+			while (start != null) {
+				if (start.data.equals(current.data)) {
+					prev.next = start.next;
+					start = start.next;
+				}
+				else {
+					prev = start;
+					start = start.next;
+				}
+			}
+			current = current.next;
+		}
+		return node;
+	}
+
+
 	public static void main(String[] args) {
 		LinkedList<String> list = new LinkedList<>();
 		list.print();
@@ -585,5 +613,22 @@ public class LinkedList<T extends Comparable<T>> {
 		mlist.addLast("Hari");
 		mlist.deleteMiddle();
 		mlist.print();
+
+		LinkedList<String> dlist = new LinkedList<String>();
+		dlist.addLast("Ram");
+		dlist.addLast("Ram");
+		dlist.removeDuplicates();
+		dlist.print();
+		dlist.addLast("Shyam");
+		dlist.removeDuplicates();
+		dlist.print();
+		dlist.addLast("Shyam");
+		dlist.addLast("Shyam");
+		dlist.addLast("Sita");
+		dlist.addLast("Sita");
+		dlist.addLast("Prabhu");
+		dlist.removeDuplicates();
+		dlist.print();
+		
 	}
 }
