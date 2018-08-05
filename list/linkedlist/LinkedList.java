@@ -446,6 +446,31 @@ public class LinkedList<T extends Comparable<T>> {
 		return node;
 	}
 
+	public void deleteMiddle() {
+		head = deleteMiddle(head);
+	}
+
+	private Node<T> deleteMiddle(Node<T> node) {
+		if (node == null) {
+			return node;
+		}
+		Node<T> slowPtr = node;
+		Node<T> prevToSlowPtr = null;
+		Node<T> fastPtr = node;
+		while (fastPtr != null && fastPtr.next != null) {
+			prevToSlowPtr = slowPtr;
+			slowPtr = slowPtr.next;
+			fastPtr = fastPtr.next.next;
+		}
+		if (prevToSlowPtr == null && slowPtr != null) {
+			node = null;
+		}
+		else if (prevToSlowPtr != null && slowPtr != null) {
+			prevToSlowPtr.next = slowPtr.next;
+		}
+		return node;
+	}
+
 
 	public static void main(String[] args) {
 		LinkedList<String> list = new LinkedList<>();
@@ -552,5 +577,13 @@ public class LinkedList<T extends Comparable<T>> {
 		pwsll.addLast(50);
 		pwsll.pairWiseSwap();
                 pwsll.print();
+
+
+		LinkedList<String> mlist = new LinkedList<String>();
+		mlist.addLast("Ram");
+		mlist.addLast("Shyam");
+		mlist.addLast("Hari");
+		mlist.deleteMiddle();
+		mlist.print();
 	}
 }
