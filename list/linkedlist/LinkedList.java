@@ -476,7 +476,7 @@ public class LinkedList<T extends Comparable<T>> {
 		head = removeDuplicates(head);
 	}
 
-	public Node<T> removeDuplicates(Node<T> node) {
+	private Node<T> removeDuplicates(Node<T> node) {
 		if (node == null || node.next == null) {
 			return node;
 		}
@@ -498,6 +498,34 @@ public class LinkedList<T extends Comparable<T>> {
 		}
 		return node;
 	}
+
+	public void removeDuplicatesSortedList() {
+		head = removeDuplicatesSortedList(head);
+	}
+
+	private Node<T> removeDuplicatesSortedList(Node<T> node) {
+		if (node == null || node.next == null) {
+			return node;
+		}
+		Node<T> current = node;
+		while (current != null) {
+			Node<T> prev  = current;
+			Node<T> start = current.next;
+			boolean found = false;
+			while(start != null && start.data.equals(current.data)) {
+				//prev.next = start.next;
+				start = start.next;
+				found = true;
+			}
+			if(found) {
+				prev.next = start;
+				found = false;
+			}
+			current = start;
+		}
+		return node;   
+	}
+	
 
 
 	public static void main(String[] args) {
@@ -630,5 +658,13 @@ public class LinkedList<T extends Comparable<T>> {
 		dlist.removeDuplicates();
 		dlist.print();
 		
+		LinkedList<String> rdslist = new LinkedList<String>();
+		rdslist.addLast("Ram");
+		rdslist.addLast("Shyam");
+		rdslist.addLast("Shyam");
+		rdslist.addLast("Zebra");
+		rdslist.print();
+		rdslist.removeDuplicatesSortedList();
+		rdslist.print();	
 	}
 }
