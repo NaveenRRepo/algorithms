@@ -526,7 +526,59 @@ public class LinkedList<T extends Comparable<T>> {
 		return node;   
 	}
 	
+	public void addNumber(LinkedList<T> list2) {
+		head = addNumber(this.head, list2.head);
+	}
 
+	private Node<T> addNumber(Node<T> node1, Node<T> node2) {
+		
+		if (node1 == null && node2 == null) {
+			return node1;
+		}
+
+		if (node1 == null) {
+			return node2;
+		}
+
+		if (node2 == null) {
+			return node1;
+		}
+
+		int carry = 0;
+		int remainder = 0;
+		Node<T> temp1 = null;
+		Node<T> temp2 = null;
+
+		while (node1 != null) {
+			
+			if (node2 == null) {
+				break;
+			}
+			int val = (Integer) node1.data + (Integer) node2.data + carry;
+			if (val > 10) {
+				carry = 1;
+			}
+			else {
+				carry = 0;
+			}
+			remainder =  (val) % 10;
+			node1.data = (T) new Integer(remainder);
+			temp1 = node1;
+			temp2 = node2;
+ 
+			node1 = node1.next;
+			node2 = node2.next;
+		}
+		if (node1 == null && node2 == null && carry > 0) {
+			Node<T> temp = new Node((T) new Integer(carry));
+			node1.next = temp;
+			return node1;
+		}
+
+		return null;
+	}
+
+	
 
 	public static void main(String[] args) {
 		LinkedList<String> list = new LinkedList<>();
@@ -665,6 +717,27 @@ public class LinkedList<T extends Comparable<T>> {
 		rdslist.addLast("Zebra");
 		rdslist.print();
 		rdslist.removeDuplicatesSortedList();
-		rdslist.print();	
+		rdslist.print();
+		
+		int num = 1999;
+
+		LinkedList<Integer> numList = new LinkedList<Integer>();
+		int remainder = num;
+		while (num != 0) {
+                	remainder = num % 10;
+                	numList.addLast(remainder);
+                	num = num / 10;
+		}
+
+		int num2 = 1;
+		LinkedList<Integer> numList2 = new LinkedList<Integer>();
+		remainder = num2;
+                while (num2 != 0) {
+                        remainder = num2 % 10;
+                        numList2.addLast(remainder);
+                        num2 = num2 / 10;
+                }
+		numList.addNumber(numList2);
+		numList.print();	
 	}
 }
